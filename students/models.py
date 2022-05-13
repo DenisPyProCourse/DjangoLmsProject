@@ -1,3 +1,7 @@
+from django.db import models
+
+# Create your models here.
+
 import datetime
 
 from dateutil.relativedelta import relativedelta
@@ -8,13 +12,17 @@ from faker import Faker
 from .validators import adult_validator
 from .validators import phone_number_validator
 from .validators import phone_number_norm
-# Create your models here.
+# from .validators import AdultValidator
 
 
-class Teacher(models.Model):
-    teacher_first_name = models.CharField(max_length=100)
+class Student(models.Model):
+    first_name = models.CharField(
+        max_length=100,
+        verbose_name='fname',
+        validators=[MinLengthValidator(2)]
+    )
+    last_name = models.CharField(max_length=100, verbose_name='lname', validators=[MinLengthValidator(2)])
     age = models.PositiveIntegerField()
-    teacher_last_name = models.CharField(max_length=100)
     birthday = models.DateField(
         default=datetime.date.today,
         validators=[adult_validator]
@@ -23,8 +31,12 @@ class Teacher(models.Model):
     phone_number = models.CharField(max_length=25, null=True, validators=[phone_number_validator,
                                                                           phone_number_norm])
 
+    class Meta:
+        verbose_name = 'student'
+        verbose_name_plural = 'teachers'
+
     def __str__(self):
-        return f'{self.teacher_first_name} {self.teacher_last_name}, age {self.age} - {self.phone_number}'
+        return f'{self.first_name} {self.last_name} {self.age} - {self.phone_number}'
 
     def save(self, *args, **kwargs):
         self.age = relativedelta(datetime.date.today(), self.birthday).years
@@ -32,12 +44,14 @@ class Teacher(models.Model):
         super().save(*args, **kwargs)
 
     @staticmethod
-    def gen_teachers(cnt = 10):
+    def gen_students(cnt=10):
         fk = Faker()
-        for i in range(cnt):
-            tc = Teacher(
-                teacher_first_name = fk.first_name(),
-                teacher_last_name = fk.last_name(),
-                age = fk.random_int(min = 24, max = 70)
+        for _ in range(cnt):
+            st = Student(
+                first_name=fk.first_name(),
+                last_name=fk.last_name(),
+                age=fk.random_int(min=18, max=45),
+                birthday=fk.date_between(start_date='-65y', end_date='-15y')
             )
-            tc.save()
+
+            st.save()

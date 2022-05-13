@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {{ title }}</title>
+</head>
+<body>
+    <form method="get">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="first_name" placeholder="Bob"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="last_name" placeholder="Dilan"><br>
+        <label for="age_id">Age:</label><br>
+        <input type="number" id="age_id" name="age" placeholder="45"><br>	<br>
+
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <a href="create/">Create</a>
+    <br>
+    <br>
+    {% for student in students %}
+        <a href="update/{{ student.pk }}">Edit</a>&nbsp;&nbsp;{{ student }}<br>
+    {% endfor %}
+</body>
+</html>

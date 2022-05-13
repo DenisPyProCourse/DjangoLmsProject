@@ -9,4 +9,4 @@ class Group(models.Model):
     teacher_last_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'Group {self.group_name} include {self.students_number} students. Leading teacher {self.teacher_last_name}'
+        return f'Group "{self.group_name}" include [{self.students_number}] students. Leading teacher is {self.teacher_last_name}'

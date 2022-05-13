@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {{ title }}</title>
+</head>
+<body>
+    <form method="get">
+        <label for="group_name">Group name:</label><br>
+        <input type="text" id="group_name" name="group_name" placeholder="A"><br>
+        <label for="teacher_last_name">Teacher last name:</label><br>
+        <input type="text" id="teacher_last_name" name="teacher_last_name" placeholder="Smirnov"><br>
+        <label for="students_number">Students number:</label><br>
+        <input type="number" id="students_number" name="students_number" placeholder="22"><br>	<br>
+
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <a href="create/">Create</a>
+    <br>
+    <br>
+    {% for group in groups %}
+        <a href="update/{{ group.pk }}">Edit</a>&nbsp;&nbsp;{{ group }}<br>
+    {% endfor %}
+</body>
+</html>
