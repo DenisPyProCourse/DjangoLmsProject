@@ -15,27 +15,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from teachers.views import get_teacher, generate_teachers, update_teacher
+from teachers.views import get_teacher, generate_teachers, update_teacher, delete_teacher
 from students.views import create_student
 from students.views import get_students
 from students.views import index
 from students.views import update_student
 from teachers.views import create_teacher
-from groups.views import create_group, update_group
+from groups.views import create_group, update_group, delete_group
 from groups.views import get_group
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('teachers/', get_teacher),                 # Read Teacher
+    path('teachers/', get_teacher, name = 'teachers'),                 # Read Teacher
     path('generate_teachers/', generate_teachers),  # Generate Teachers
-    path('students/', get_students),                # Read Student
-    path('groups/', get_group),                     # Read Groups
+    path('students/', get_students, name = 'students'),                # Read Student
+    path('groups/', get_group, name = 'groups'),                     # Read Groups
     path('teachers/create/', create_teacher),          # Create Teacher
     path('students/create/', create_student),       # Create Student
     path('groups/create/', create_group),            # Create Group
     path('students/update/<int:pk>/', update_student),       # Update Student
     path('teachers/update/<int:pk>/', update_teacher),       # Update Teacher
     path('groups/update/<int:pk>', update_group),           # Update Group
+    path('teachers/delete/<int:pk>', delete_teacher),           # Delete Teacher
+    path('groups/delete/<int:pk>', delete_group),           # Delete Group
 
 ]

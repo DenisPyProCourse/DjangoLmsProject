@@ -12,8 +12,14 @@ from webargs.fields import Str, Int
 from webargs.djangoparser import use_args
 
 
+
 def index(request):
-    return HttpResponse('LMS System!')
+    # return HttpResponse('LMS System!')
+    return render(
+        request,
+        'students/index.html',
+        {'title': 'Django LMS', 'Welcome': 'Welcome to DjangoLMS!'}
+    )
 
 
 @use_args(

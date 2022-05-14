@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,7 +22,11 @@
     <br>
     <br>
     {% for teacher in teachers %}
-        <a href="update/{{ teacher.pk }}">Edit</a>&nbsp;&nbsp;{{ teacher }}<br>
+        <a href="update/{{ teacher.pk }}">Edit / </a>
+        <a href="delete/{{ teacher.pk }}">Delete</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ teacher }}<br>
     {% endfor %}
+
+
 </body>
 </html>
+{% endblock %}

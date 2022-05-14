@@ -87,3 +87,12 @@ def update_teacher(request, pk):
         """
 
     return HttpResponse(html_form)
+
+@csrf_exempt
+def delete_teacher(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    teacher.delete()
+
+
+    return HttpResponseRedirect('/teachers/')
+

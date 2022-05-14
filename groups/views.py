@@ -76,3 +76,11 @@ def update_group(request, pk):
         """
 
     return HttpResponse(html_form)
+
+@csrf_exempt
+def delete_group(request, pk):
+    group = Group.objects.get(pk=pk)
+    group.delete()
+
+
+    return HttpResponseRedirect('/groups/')

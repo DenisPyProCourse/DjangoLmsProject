@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,7 +22,10 @@
     <br>
     <br>
     {% for group in groups %}
-        <a href="update/{{ group.pk }}">Edit</a>&nbsp;&nbsp;{{ group }}<br>
+        <a href="update/{{ group.pk }}">Edit / </a>
+        <a href="delete/{{ group.pk }}">Delete</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ group }}<br>
     {% endfor %}
 </body>
 </html>
+
+{% endblock %}

@@ -31,6 +31,10 @@ class Teacher(models.Model):
         self.phone_number = phone_number_norm(self.phone_number)
         super().save(*args, **kwargs)
 
+    # def delete_t(self, t_id):
+    #     tc = Teacher.objects.get(id=t_id)
+    #     return tc.delete()
+
     @staticmethod
     def gen_teachers(cnt = 10):
         fk = Faker()
