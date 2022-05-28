@@ -1,15 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from .models import Group
-from .utils import qs2html
-from webargs.fields import Str, Int
-from webargs import fields
-from webargs.djangoparser import use_args, use_kwargs
-from .forms import GroupCreateForm
-from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 
-# Create your views here.
+from .models import Group
+from webargs.fields import Str, Int
+from webargs.djangoparser import use_args
+from .forms import GroupCreateForm
+
 
 @use_args(
     {
@@ -32,7 +29,7 @@ def get_group(request, args):
     # html = qs2html(gr)
     # return HttpResponse(html)
 
-@csrf_exempt
+
 def create_group(request):
     if request.method == 'GET':
         form = GroupCreateForm()
@@ -41,22 +38,17 @@ def create_group(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect(reverse('groups:list'))
 
-    html_form = f"""
-            <form method="post">
-                <table>
-                    {form.as_table()}
-                </table>
-                <input type="submit" value="Create">
-            </form> 
-        """
+    return render(
+        request=request,
+        template_name='groups/create.html',
+        context={'form': form}
+    )
 
-    return HttpResponse(html_form)
 
-@csrf_exempt
 def update_group(request, pk):
-    group = Group.objects.get(pk=pk)
+    group = get_object_or_404(Group, pk=pk)
     if request.method == 'GET':
         form = GroupCreateForm(instance=group)
     else:
@@ -64,23 +56,16 @@ def update_group(request, pk):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect(reverse('groups:list'))
 
-    html_form = f"""
-            <form method="post">
-                <table>
-                    {form.as_table()}
-                </table>
-                <input type="submit" value="Update">
-            </form> 
-        """
+    return render(request, 'groups/update.html', {'form': form})
 
-    return HttpResponse(html_form)
 
-@csrf_exempt
 def delete_group(request, pk):
-    group = Group.objects.get(pk=pk)
-    group.delete()
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        group.delete()
+        return HttpResponseRedirect(reverse('groups:list'))
 
 
-    return HttpResponseRedirect('/groups/')
+    return render(request, 'groups/delete.html', {'group': group})

@@ -8,5 +8,10 @@ class Group(models.Model):
     students_number = models.PositiveIntegerField()
     teacher_last_name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = 'group'
+        verbose_name_plural = 'groups'
+        db_table = 'groups'
+
     def __str__(self):
         return f'Group "{self.group_name}" include [{self.students_number}] students. Leading teacher is {self.teacher_last_name}'

@@ -5,16 +5,24 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from faker import Faker
 
-from .validators import adult_validator
+from core.validators import adult_validator
 from .validators import phone_number_validator
 from .validators import phone_number_norm
 # Create your models here.
 
 
 class Teacher(models.Model):
-    teacher_first_name = models.CharField(max_length=100)
+    teacher_first_name = models.CharField(
+        max_length=100,
+        verbose_name='fname',
+        validators=[MinLengthValidator(2)],
+        db_column='f_name')
     age = models.PositiveIntegerField()
-    teacher_last_name = models.CharField(max_length=100)
+    teacher_last_name = models.CharField(
+        max_length=100,
+        verbose_name='lname',
+        validators=[MinLengthValidator(2)],
+        db_column='l_name')
     birthday = models.DateField(
         default=datetime.date.today,
         validators=[adult_validator]
@@ -22,6 +30,11 @@ class Teacher(models.Model):
     )
     phone_number = models.CharField(max_length=25, null=True, validators=[phone_number_validator,
                                                                           phone_number_norm])
+
+    class Meta:
+        verbose_name = 'teacher'
+        verbose_name_plural = 'teacher'
+        db_table = 'teachers'
 
     def __str__(self):
         return f'{self.teacher_first_name} {self.teacher_last_name}, age {self.age} - {self.phone_number}'

@@ -1,15 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 from .models import Teacher
-from .utils import qs2html, gen2html
+from .utils import gen2html
 from webargs.fields import Str, Int
-from webargs import fields
+
 from webargs.djangoparser import use_args, use_kwargs
 from .forms import TeacherCreateForm
-from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
 
 @use_args(
     {
@@ -43,7 +43,6 @@ def generate_teachers(request, cnt):
     html = gen2html(tc)
     return HttpResponse(html)
 
-@csrf_exempt
 def create_teacher(request):
     if request.method == 'GET':
         form = TeacherCreateForm()
@@ -52,22 +51,16 @@ def create_teacher(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect((reverse('teachers:list')))
 
-    html_form = f"""
-            <form method="post">
-                <table>
-                    {form.as_table()}
-                </table>
-                <input type="submit" value="Create">
-            </form> 
-        """
+    return render(
+        request=request,
+        template_name='teachers/create.html',
+        context={'form': form}
+    )
 
-    return HttpResponse(html_form)
-
-@csrf_exempt
 def update_teacher(request, pk):
-    teacher = Teacher.objects.get(pk=pk)
+    teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'GET':
         form = TeacherCreateForm(instance=teacher)
     else:
@@ -75,24 +68,15 @@ def update_teacher(request, pk):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect(reverse('teachers:list'))
 
-    html_form = f"""
-            <form method="post">
-                <table>
-                    {form.as_table()}
-                </table>
-                <input type="submit" value="Update">
-            </form> 
-        """
+    return render(request, 'teachers/update.html', {'form': form})
 
-    return HttpResponse(html_form)
-
-@csrf_exempt
 def delete_teacher(request, pk):
-    teacher = Teacher.objects.get(pk=pk)
-    teacher.delete()
+    teacher = get_object_or_404(Teacher, pk=pk)
+    if request.method == 'POST':
+        teacher.delete()
+        return HttpResponseRedirect(reverse('teachers:list'))
 
-
-    return HttpResponseRedirect('/teachers/')
+    return render(request, 'teachers/delete.html', {'teacher': teacher})
 

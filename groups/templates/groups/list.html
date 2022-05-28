@@ -1,31 +1,92 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}List of groups{% endblock %}
+
+{% block style %}
+#list {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#list td {
+    border: 1px solid #dddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#list tr:nth-child(even) {
+    background-color: #dddd;
+}
+{% endblock %}
 
 {% block content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - {{ title }}</title>
-</head>
-<body>
     <form method="get">
-        <label for="group_name">Group name:</label><br>
-        <input type="text" id="group_name" name="group_name" placeholder="A"><br>
-        <label for="teacher_last_name">Teacher last name:</label><br>
-        <input type="text" id="teacher_last_name" name="teacher_last_name" placeholder="Smirnov"><br>
-        <label for="students_number">Students number:</label><br>
-        <input type="number" id="students_number" name="students_number" placeholder="22"><br>	<br>
-
+        <table>
+            <tr>
+                <td><label for="group_name" style="font-weight: bold;">Group name:</label></td>
+                <td><input type="text" id="group_name" name="group_name" placeholder="A"></td>
+            </tr>
+            <tr>
+                <td><label for="students_number" style="font-weight: bold;">Students number:</label></td>
+                <td><input type="number" id="students_number" name="students_number" placeholder="21"></td>
+            </tr>
+            <tr>
+                <td><label for="teacher_last_name" style="font-weight: bold;">Teacher last name:</label></td>
+                <td><input type="text" id="teacher_last_name" name="teacher_last_name" placeholder="Smirnov"></td>
+            </tr>
+        </table>
         <input type="submit" value="Search">
     </form>
     <br>
-    <a href="create/">Create</a>
-    <br>
-    <br>
-    {% for group in groups %}
-        <a href="update/{{ group.pk }}">Edit / </a>
-        <a href="delete/{{ group.pk }}">Delete</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ group }}<br>
-    {% endfor %}
-</body>
-</html>
 
+      <table id="list">
+    <thead>
+        <tr>
+            <th>N</th>
+            <th>Group name</th>
+            <th>Students number</th>
+            <th>Teacher last name</th>
+            <th>✎</th>
+            <th>🗑</th>
+        </tr>
+    </thead>
+    {% for group in groups %}
+            <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ group.group_name }}</td>
+            <td>{{ group.students_number }}</td>
+            <td>{{ group.teacher_last_name }}</td>
+            <td><a href="{% url 'groups:update' group.pk %}">Edit</a></td>
+            <td><a href="{% url 'groups:delete' group.pk %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+          </table>
 {% endblock %}
+
+
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>LMS - {{ title }}</title>#}
+{#</head>#}
+{#<body>#}
+{#    <form method="get">#}
+{#        <label for="fname">First name:</label><br>#}
+{#        <input type="text" id="fname" name="first_name" placeholder="Bob"><br>#}
+{#        <label for="lname">Last name:</label><br>#}
+{#        <input type="text" id="lname" name="last_name" placeholder="Dilan"><br>#}
+{#        <label for="age_id">Age:</label><br>#}
+{#        <input type="number" id="age_id" name="age" placeholder="45"><br>	<br>#}
+{##}
+{#        <input type="submit" value="Search">#}
+{#    </form>#}
+{#    <br>#}
+{#    <a href="create/">Create</a>#}
+{#    <br>#}
+{#    <br>#}
+{#    {% for student in students %}#}
+{#        <a href="update/{{ student.pk }}">Edit</a>&nbsp;&nbsp;{{ student }}<br>#}
+{#    {% endfor %}#}
+{#</body>#}
+{#</html>#}
