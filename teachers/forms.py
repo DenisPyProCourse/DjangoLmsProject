@@ -28,6 +28,3 @@ class TeacherCreateForm(forms.ModelForm):
     def clean_last_name(self):
         ln = self.cleaned_data['teacher_last_name']
         return ln.title()
-
-
-

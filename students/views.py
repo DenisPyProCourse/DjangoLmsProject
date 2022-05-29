@@ -1,15 +1,13 @@
-from django.shortcuts import render
-
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse
+
+from webargs.djangoparser import use_args
+from webargs.fields import Int, Str
 
 from .forms import StudentCreateForm
 from .models import Student
-
-from webargs.fields import Str, Int
-from webargs.djangoparser import use_args
-
 
 
 @use_args(
@@ -63,10 +61,10 @@ def update_student(request, pk):
         'students/update.html',
         {'form': form})
 
+
 def delete_student(request, pk):
     student = get_object_or_404(Student, pk=pk)
     if request.method == 'POST':
         student.delete()
         return HttpResponseRedirect(reverse('students:list'))
     return render(request, 'students/delete.html', {'student': student})
-

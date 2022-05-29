@@ -10,6 +10,7 @@ def qs2html(qs):
 
     return '<br>'.join(lst)
 
+
 def gen2html(gen):
     lst = []
     if gen is not None:

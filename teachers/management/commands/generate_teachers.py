@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand
+
 from teachers.models import Teacher
 
 
 class Command(BaseCommand):
-    help = 'generate teachers'
+    # help = 'generate teachers'
 
     def add_arguments(self, parser):
         # Optional argument
@@ -15,16 +16,15 @@ class Command(BaseCommand):
                 cnt = kwargs['cnt'][0]
 
                 Teacher.gen_teachers(cnt)
-                self.stdout.write(f'Command generate_teachers is done: ')
+                self.stdout.write('Command generate_teachers is done: ')
                 tc = Teacher.objects.order_by('-pk')[:cnt]
                 for i in tc:
                     self.stdout.write(f'{i}')
             else:
-                self.stdout.write(f'ValueError')
+                self.stdout.write('ValueError')
         else:
             Teacher.gen_teachers()
-            self.stdout.write(f'Command generate_teachers is done: ')
+            self.stdout.write('Command generate_teachers is done: ')
             tc = Teacher.objects.order_by('-pk')[:10]
             for i in tc:
                 self.stdout.write(f'{i}')
-

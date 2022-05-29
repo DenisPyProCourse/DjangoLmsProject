@@ -14,4 +14,5 @@ class Group(models.Model):
         db_table = 'groups'
 
     def __str__(self):
-        return f'Group "{self.group_name}" include [{self.students_number}] students. Leading teacher is {self.teacher_last_name}'
+        return f'Group "{self.group_name}" include [{self.students_number}] students. ' \
+               f'Leading teacher is {self.teacher_last_name}'

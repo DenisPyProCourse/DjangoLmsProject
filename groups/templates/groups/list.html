@@ -2,53 +2,53 @@
 
 {% block title %}List of groups{% endblock %}
 
-{% block style %}
-#list {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#list td {
-    border: 1px solid #dddd;
-    text-align: left;
-    padding: 8px;
-}
-
-#list tr:nth-child(even) {
-    background-color: #dddd;
-}
-{% endblock %}
+{#{% block style %}#}
+{##list {#}
+{#    font-family: arial, sans-serif;#}
+{#    border-collapse: collapse;#}
+{#    width: 100%;#}
+{#}#}
+{##}
+{##list td {#}
+{#    border: 1px solid #dddd;#}
+{#    text-align: left;#}
+{#    padding: 8px;#}
+{#}#}
+{##}
+{##list tr:nth-child(even) {#}
+{#    background-color: #dddd;#}
+{#}#}
+{#{% endblock %}#}
 
 {% block content %}
-    <form method="get">
-        <table>
-            <tr>
-                <td><label for="group_name" style="font-weight: bold;">Group name:</label></td>
-                <td><input type="text" id="group_name" name="group_name" placeholder="A"></td>
-            </tr>
-            <tr>
-                <td><label for="students_number" style="font-weight: bold;">Students number:</label></td>
-                <td><input type="number" id="students_number" name="students_number" placeholder="21"></td>
-            </tr>
-            <tr>
-                <td><label for="teacher_last_name" style="font-weight: bold;">Teacher last name:</label></td>
-                <td><input type="text" id="teacher_last_name" name="teacher_last_name" placeholder="Smirnov"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Search">
-    </form>
+{#    <form method="get">#}
+{#        <table>#}
+{#            <tr>#}
+{#                <td><label for="group_name" style="font-weight: bold;">Group name:</label></td>#}
+{#                <td><input type="text" id="group_name" name="group_name" placeholder="A"></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td><label for="students_number" style="font-weight: bold;">Students number:</label></td>#}
+{#                <td><input type="number" id="students_number" name="students_number" placeholder="21"></td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <td><label for="teacher_last_name" style="font-weight: bold;">Teacher last name:</label></td>#}
+{#                <td><input type="text" id="teacher_last_name" name="teacher_last_name" placeholder="Smirnov"></td>#}
+{#            </tr>#}
+{#        </table>#}
+{#        <input type="submit" value="Search">#}
+{#    </form>#}
     <br>
 
-      <table id="list">
+      <table class="table table-striped">
     <thead>
         <tr>
-            <th>N</th>
-            <th>Group name</th>
-            <th>Students number</th>
+            <th style="width: 5%">N</th>
+            <th style="width: 25%">Group name</th>
+            <th style="width: 15%">Students number</th>
             <th>Teacher last name</th>
-            <th>✎</th>
-            <th>🗑</th>
+            <th style="width: 5%"><i class="bi bi-pencil"></i></th>
+            <th style="width: 5%"><i class="bi bi-trash3"></i></th>
         </tr>
     </thead>
     {% for group in groups %}
@@ -57,8 +57,8 @@
             <td>{{ group.group_name }}</td>
             <td>{{ group.students_number }}</td>
             <td>{{ group.teacher_last_name }}</td>
-            <td><a href="{% url 'groups:update' group.pk %}">Edit</a></td>
-            <td><a href="{% url 'groups:delete' group.pk %}">Delete</a></td>
+            <td><a class="btn btn-outline-primary" href="{% url 'groups:update' group.pk %}">Edit</a></td>
+            <td><a class="btn btn-outline-primary" href="{% url 'groups:delete' group.pk %}">Delete</a></td>
         </tr>
     {% endfor %}
           </table>

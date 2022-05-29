@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse
 
-from .models import Group
-from webargs.fields import Str, Int
 from webargs.djangoparser import use_args
+from webargs.fields import Int, Str
+
 from .forms import GroupCreateForm
+from .models import Group
 
 
 @use_args(
@@ -14,7 +16,7 @@ from .forms import GroupCreateForm
         'teacher_last_name': Str(required=False),
         'students_number': Int(required=False)
     },
-    location = 'query'
+    location='query'
 )
 def get_group(request, args):
 
@@ -66,6 +68,5 @@ def delete_group(request, pk):
     if request.method == 'POST':
         group.delete()
         return HttpResponseRedirect(reverse('groups:list'))
-
 
     return render(request, 'groups/delete.html', {'group': group})
