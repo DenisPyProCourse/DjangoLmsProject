@@ -1,4 +1,5 @@
 from django import forms
+from django_filters import FilterSet
 
 from .models import Student
 
@@ -28,3 +29,12 @@ class StudentCreateForm(forms.ModelForm):
     def clean_last_name(self):
         ln = self.cleaned_data['last_name']
         return ln.title()
+
+
+class StudentFilterForm(FilterSet):
+    class Meta:
+        model = Student
+        fields = {
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'startswith'],
+        }

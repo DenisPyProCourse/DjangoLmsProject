@@ -6,27 +6,19 @@ from django.urls import reverse
 from webargs.djangoparser import use_args
 from webargs.fields import Int, Str
 
-from .forms import GroupCreateForm
+from .forms import GroupCreateForm, GroupFilterForm, GroupUpdateForm
 from .models import Group
 
 
-@use_args(
-    {
-        'group_name': Str(required=False),
-        'teacher_last_name': Str(required=False),
-        'students_number': Int(required=False)
-    },
-    location='query'
-)
-def get_group(request, args):
+def get_group(request):
 
     gr = Group.objects.all()
-    for key, values in args.items():
-        gr = gr.filter(**{key: values})
+    groups_filter = GroupFilterForm(data=request.GET, queryset=gr)
+
     return render(
         request,
         'groups/list.html',
-        {'title': 'List of groups', 'groups': gr}
+        {'groups_filter': groups_filter}
     )
     # html = qs2html(gr)
     # return HttpResponse(html)
@@ -52,15 +44,15 @@ def create_group(request):
 def update_group(request, pk):
     group = get_object_or_404(Group, pk=pk)
     if request.method == 'GET':
-        form = GroupCreateForm(instance=group)
+        form = GroupUpdateForm(instance=group)
     else:
-        form = GroupCreateForm(request.POST, instance=group)
+        form = GroupUpdateForm(request.POST, instance=group)
         if form.is_valid():
             form.save()
 
             return HttpResponseRedirect(reverse('groups:list'))
 
-    return render(request, 'groups/update.html', {'form': form})
+    return render(request, 'groups/update.html', {'form': form, 'group': group})
 
 
 def delete_group(request, pk):

@@ -10,6 +10,7 @@ from django.db import models
 from faker import Faker
 
 # from .validators import AdultValidator
+from groups.models import Group
 from .validators import phone_number_norm
 from .validators import phone_number_validator
 
@@ -34,7 +35,9 @@ class Student(models.Model):
         # validators=[AdultValidator(20)]
     )
     phone_number = models.CharField(max_length=25, null=True, validators=[phone_number_validator,
-                                                                          phone_number_norm])
+                                                                            phone_number_norm])
+
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='students')
 
     class Meta:
         verbose_name = 'student'
@@ -46,7 +49,7 @@ class Student(models.Model):
 
     def save(self, *args, **kwargs):
         # self.age = relativedelta(datetime.date.today(), self.birthday).years
-        self.phone_number = phone_number_norm(self.phone_number)
+        #self.phone_number = phone_number_norm(self.phone_number)
         super().save(*args, **kwargs)
 
     def get_age(self):
@@ -59,8 +62,8 @@ class Student(models.Model):
             st = Student(
                 first_name=fk.first_name(),
                 last_name=fk.last_name(),
-                age=fk.random_int(min=18, max=45),
-                birthday=fk.date_between(start_date='-65y', end_date='-15y')
+                birthday=fk.date_between(start_date='-65y', end_date='-15y'),
+               # phone_number=fk.phone_number()
             )
 
             st.save()

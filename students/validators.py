@@ -25,11 +25,11 @@ def phone_number_validator(phone_number):
     correct_number = phone_number_norm(phone_number)
     result = Student.objects.filter(phone_number=correct_number).exists()
 
-    # if len(teachers) > 0:
-    if result:
-        raise ValidationError(f'Phone number {correct_number} is not unique.')
-    if len(correct_number) != 12:
-        raise ValidationError(f'Phone number {correct_number} must include 12 digits.')
+    # # if len(teachers) > 0:
+    # if result:
+    #     raise ValidationError(f'Phone number {correct_number} is not unique.')
+    # if len(correct_number) != 12:
+    #     raise ValidationError(f'Phone number {correct_number} must include 12 digits.')
     if not phone_number.isdigit():
         raise ValidationError(f'Phone number {correct_number} must include only digits.')
 

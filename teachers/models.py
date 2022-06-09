@@ -9,6 +9,7 @@ from django.db import models
 
 from faker import Faker
 
+from groups.models import Group
 from .validators import phone_number_norm
 from .validators import phone_number_validator
 # Create your models here.
@@ -34,6 +35,9 @@ class Teacher(models.Model):
     phone_number = models.CharField(max_length=25, null=True, validators=[phone_number_validator,
                                                                           phone_number_norm])
 
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='teachers')
+    salary = models.PositiveIntegerField(default=10000)
+
     class Meta:
         verbose_name = 'teacher'
         verbose_name_plural = 'teacher'
@@ -44,7 +48,7 @@ class Teacher(models.Model):
 
     def save(self, *args, **kwargs):
         # self.age = relativedelta(datetime.date.today(), self.birthday).years
-        self.phone_number = phone_number_norm(self.phone_number)
+        #self.phone_number = phone_number_norm(self.phone_number)
         super().save(*args, **kwargs)
 
     def get_age(self):
@@ -56,7 +60,7 @@ class Teacher(models.Model):
         for i in range(cnt):
             tc = Teacher(
                 teacher_first_name=fk.first_name(),
-                teacher_last_name=fk.last_name(),
-                age=fk.random_int(min=24, max=70)
+                teacher_last_name=fk.last_name()  #,
+                # age=fk.random_int(min=24, max=70)
             )
             tc.save()

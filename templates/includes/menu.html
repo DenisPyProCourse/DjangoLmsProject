@@ -45,10 +45,18 @@
         </li>
 
       </ul>
-{#      <form class="d-flex" role="search">#}
-{#        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
-{#        <button class="btn btn-outline-success" type="submit">Search</button>#}
-{#      </form>#}
+
+        {% if students_filter %}
+            {% include 'students/search.html' %}
+        {% endif %}
+        {% if teachers_filter %}
+            {% include 'teachers/search.html' %}
+        {% endif %}
+        {% if groups_filter %}
+            {% include 'groups/search.html' %}
+        {% endif %}
+
+
     </div>
   </div>
 </nav>

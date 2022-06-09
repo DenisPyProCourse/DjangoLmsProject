@@ -7,29 +7,20 @@ from django.urls import reverse
 from webargs.djangoparser import use_args, use_kwargs
 from webargs.fields import Int, Str
 
-from .forms import TeacherCreateForm
+from .forms import TeacherCreateForm, TeacherFilterForm
 from .models import Teacher
 from .utils import gen2html
 
 
-@use_args(
-    {
-        'teacher_first_name': Str(required=False),
-        'teacher_last_name': Str(required=False),
-        'age': Int(required=False)
-    },
-    location='query'
-)
-def get_teacher(request, args):
+def get_teacher(request):
     tc = Teacher.objects.all()
-    for key, values in args.items():
-        tc = tc.filter(**{key: values})
+    teachers_filter = TeacherFilterForm(data=request.GET, queryset=tc)
     # html = qs2html(tc)
     # return HttpResponse(html)
     return render(
         request,
         'teachers/list.html',
-        {'title': 'List of teachers', 'teachers': tc})
+        {'teachers_filter': teachers_filter})
 
 
 @use_kwargs(
