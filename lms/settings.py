@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig',
     'students.apps.StudentsConfig',
     'core.apps.CoreConfig',
+    'courses.apps.CoursesConfig',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+if DEBUG:
+    SHELL_PLUS = 'ipython'
+    SHELL_PLUS_PRINT_SQL = True

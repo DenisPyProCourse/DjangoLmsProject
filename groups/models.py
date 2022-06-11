@@ -3,17 +3,26 @@ import datetime
 from django.db import models
 
 # Create your models here.
+from core.models import GroupModel
 
 
-class Group(models.Model):
-    group_name = models.CharField(max_length=100)
+class Group(GroupModel):
     # students_number = models.PositiveIntegerField()
-    # teacher_last_name = models.CharField(max_length=100)
-    start_date = models.DateField(default=datetime.date.today)
-    end_date = models.DateField(null=True)
-    create_datetime = models.DateField(auto_now_add=True)
-    update_datetime = models.DateField(auto_now=True)
 
+    headman = models.OneToOneField(
+        'students.Student',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='headman_group'
+    )
+    headteacher = models.OneToOneField(
+        'teachers.Teacher',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='headteacher_group'
+    )
     class Meta:
         verbose_name = 'group'
         verbose_name_plural = 'groups'

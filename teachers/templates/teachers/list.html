@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}List of teachers{% endblock %}
 
@@ -7,17 +8,17 @@
 {#    font-family: arial, sans-serif;#}
 {#    border-collapse: collapse;#}
 {#    width: 100%;#}
-{#}#}
+
 {##}
 {##list td {#}
 {#    border: 1px solid #dddd;#}
 {#    text-align: left;#}
 {#    padding: 8px;#}
-{#}#}
+
 {##}
 {##list tr:nth-child(even) {#}
 {#    background-color: #dddd;#}
-{#}#}
+
 {#{% endblock %}#}
 
 {% block content %}
@@ -40,7 +41,7 @@
 {#    </form>#}
     <br>
     {% with list_object=teachers_filter.qs on_group=True%}
-    {% include 'includes/teachers_list_table.html' %}
+        {% include 'includes/teachers_list_table.html' %}
     {% endwith %}
 {#      <table class="table table-striped">#}
 {#    <thead>#}

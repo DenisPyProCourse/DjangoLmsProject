@@ -9,8 +9,8 @@ class TeacherCreateForm(forms.ModelForm):
         model = Teacher
         fields = [
             # '__all__'
-            'teacher_first_name',
-            'teacher_last_name',
+            'first_name',
+            'last_name',
             'phone_number',
             # 'age',
             'birthday'
@@ -23,11 +23,11 @@ class TeacherCreateForm(forms.ModelForm):
 
     # cleaned_date
     def clean_first_name(self):
-        fn = self.cleaned_data['teacher_first_name']
+        fn = self.cleaned_data['first_name']
         return fn.title()
 
     def clean_last_name(self):
-        ln = self.cleaned_data['teacher_last_name']
+        ln = self.cleaned_data['last_name']
         return ln.title()
 
 
@@ -35,6 +35,6 @@ class TeacherFilterForm(FilterSet):
     class Meta:
         model = Teacher
         fields = {
-            'teacher_first_name': ['exact', 'icontains'],
-            'teacher_last_name': ['exact', 'startswith'],
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'startswith'],
         }

@@ -20,7 +20,7 @@ from .models import Student
 #     location='query'
 # )
 def get_students(request):  # args par was in that field
-    st = Student.objects.all()
+    st = Student.objects.all().select_related('group', 'headman_group')
     students_filter = StudentFilterForm(data=request.GET, queryset=st)
     # for key, value in args.items():         # use with decorator use_args
     #     st = st.filter(**{key: value})      # key=value

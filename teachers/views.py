@@ -13,7 +13,7 @@ from .utils import gen2html
 
 
 def get_teacher(request):
-    tc = Teacher.objects.all()
+    tc = Teacher.objects.all().select_related('group', 'headteacher_group')
     teachers_filter = TeacherFilterForm(data=request.GET, queryset=tc)
     # html = qs2html(tc)
     # return HttpResponse(html)
@@ -30,7 +30,7 @@ def get_teacher(request):
     location='query'
 )
 def generate_teachers(request, cnt):
-    Teacher.gen_teachers(cnt)
+    Teacher.generate(cnt)
     tc = Teacher.objects.order_by('-pk')[:cnt]
     html = gen2html(tc)
     return HttpResponse(html)

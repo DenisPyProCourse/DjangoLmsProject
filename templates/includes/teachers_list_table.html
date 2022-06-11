@@ -2,27 +2,29 @@
     <thead>
         <tr>
             <th style="width: 5%">N</th>
-            <th style="width: 20%">First name</th>
-            <th style="width: 20%">Last name</th>
-            <th style="width: 7%">Age</th>
-            <th style="width: 18%">Birthday</th>
-            <th><i class="bi bi-telephone"></i></th>
-            {% if on_group %}<th style="width: 10%">Group</th>{% endif %}
-            <th style="width: 5%"><i class="bi bi-pencil"></i></th>
-            <th style="width: 5%"><i class="bi bi-trash3"></i></th>
+            <th style="width: 15%">First name</th>
+            <th style="width: 15%">Last name</th>
+{#            <th style="width: 7%">Age</th>#}
+            <th style="width: 15%">Birthday</th>
+            <th><i class="bi bi-telephone-fill"></i></th>
+{#            {% if on_group %}<th style="width: 10%">Course</th>{% endif %}#}
+            <th style="width: 13%">Group leader</th>
+            <th style="width: 5%"><i class="bi bi-pencil-fill"></i></th>
+           <th style="width: 5%"><i class="bi bi-trash3-fill"></i></th>
         </tr>
     </thead>
     {% for teacher in list_object %}
             <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ teacher.teacher_first_name }}</td>
-            <td>{{ teacher.teacher_last_name }}</td>
-            <td>{%   if teacher.get_age %} {{ teacher.get_age }}{% endif %}</td>
+            <td>{{ teacher.first_name }}</td>
+            <td>{{ teacher.last_name }}</td>
+{#            <td>{%   if teacher.get_age %} {{ teacher.get_age }}{% endif %}</td>#}
             <td>{{ teacher.birthday }}</td>
             <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
-            {% if on_group %}
-                <td>{% if teacher.group %}{{ teacher.group }}{% endif %}</td>
-            {% endif %}
+{#            {% if on_group %}#}
+{#                <td>{% if teacher.courses.group_name %}{{ teacher.courses.group_name }}{% endif %}</td>#}
+{#            {% endif %}#}
+            <td>{{ teacher.headteacher_group }}</td>
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
         </tr>

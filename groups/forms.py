@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 
 from .models import Group
@@ -8,13 +10,11 @@ class GroupCreateForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = [
-            # '__all__'
             'group_name',
-            # 'students_number',
-            # 'teacher_last_name',
+            'headman',
+            'headteacher',
             'start_date',
             'end_date'
-
         ]
 
         widgets = {
@@ -37,8 +37,8 @@ class GroupFilterForm(FilterSet):
         model = Group
         fields = {
             'group_name': ['exact', 'icontains'],
-            # 'teacher_last_name': ['exact', 'startswith'],
         }
+
 
 class GroupUpdateForm(GroupCreateForm):
     class Meta(GroupCreateForm.Meta):
