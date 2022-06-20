@@ -22,6 +22,7 @@ class AdultValidator:
         if age < self.age_limit:
             raise ValidationError(f'Age should be greater than {self.age_limit} y.o.')
 
+
 def phone_number_norm(phone_number):
     for i in phone_number:
         if not i.isdigit():

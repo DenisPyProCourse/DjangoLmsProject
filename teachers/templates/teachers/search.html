@@ -9,7 +9,7 @@
     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
               <form method="get">
-            {{ teachers_filter.form | crispy }}
+            {{ object_list.form | crispy }}
             <input class="btn btn-outline-primary" type="submit" value="Search">
     </form>
       </div>

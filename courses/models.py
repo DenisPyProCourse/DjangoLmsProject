@@ -1,7 +1,8 @@
+from core.models import GroupModel
+
 from django.db import models
 
 # Create your models here.
-from core.models import GroupModel
 from teachers.models import Teacher
 
 
@@ -21,6 +22,7 @@ class Course(GroupModel):
         blank=True,
         related_name='courses'
     )
+
     class Meta:
         verbose_name = 'course'
         verbose_name_plural = 'courses'

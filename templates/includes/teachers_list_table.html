@@ -24,7 +24,7 @@
 {#            {% if on_group %}#}
 {#                <td>{% if teacher.courses.group_name %}{{ teacher.courses.group_name }}{% endif %}</td>#}
 {#            {% endif %}#}
-            <td>{{ teacher.headteacher_group }}</td>
+            <td>{% if teacher.headteacher_group %} {{teacher.headteacher_group}}{% endif %}</td>
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
         </tr>

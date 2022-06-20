@@ -20,12 +20,16 @@
       <div class="accordion-item">
     <h2 class="accordion-header" id="headingTwo">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        Teachers
+        Head Teacher
    </button>
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-    {% with list_object=group.teachers.all on_group=False%}
+{#          {% for teacher in teachers %}#}
+{#          <td>{% if teacher.headteacher_group %} {{teacher.first_name}}{% endif %}</td>#}
+{#            {% endfor %}#}
+{#          {{ teachers.all }}#}
+    {% with list_object=teachers.all on_group=False%}
         {% include 'includes/teachers_list_table.html' %}
     {% endwith %}
     </div>
@@ -43,7 +47,8 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-    {% with list_object=group.students.all on_group=False %}
+{#    {% with list_object=group.students.all on_group=False %}#}
+      {% with list_object=students on_group=False %}
         {% include 'includes/students_list_table.html' %}
     {% endwith %}
       </div>

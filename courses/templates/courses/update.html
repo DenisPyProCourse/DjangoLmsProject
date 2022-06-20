@@ -26,13 +26,23 @@
     </h2>
     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-    {% with list_object=course.teachers.all on_group=False%}
+    {% with list_object=teachers.all on_group=False%}
         {% include 'includes/teachers_list_table.html' %}
     {% endwith %}
     </div>
     </div>
   </div>
         </div>
+
+    <br>
+
+{#    {{ groups }}#}
+{#    {% with list_object=groups.all on_group=True%}#}
+{#        {% include 'includes/groups_list_table.html' %}#}
+{#    {% endwith %}#}
+
+
+
     <br>
 
 {#    <br>#}

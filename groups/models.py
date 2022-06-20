@@ -1,9 +1,7 @@
-import datetime
-
+from core.models import GroupModel
 from django.db import models
 
 # Create your models here.
-from core.models import GroupModel
 
 
 class Group(GroupModel):
@@ -23,6 +21,7 @@ class Group(GroupModel):
         blank=True,
         related_name='headteacher_group'
     )
+
     class Meta:
         verbose_name = 'group'
         verbose_name_plural = 'groups'

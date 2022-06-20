@@ -1,17 +1,18 @@
 from django.urls import path
 
-from .views import create_teacher
-from .views import delete_teacher
+from .views import CreateTeacherView
+from .views import DeleteTeacherView
 from .views import generate_teachers
-from .views import get_teacher
-from .views import update_teacher
+from .views import ListTeacherView
+from .views import UpdateTeacherView
+
 
 app_name = 'teachers'
 
 urlpatterns = [
-    path('', get_teacher, name='list'),  # Read
+    path('', ListTeacherView.as_view(), name='list'),                              # Read
     path('generate_teachers/', generate_teachers, name='generate'),   # Generate
-    path('create/', create_teacher, name='create'),                   # Create
-    path('update/<int:pk>', update_teacher, name='update'),           # Update
-    path('delete/<int:pk>', delete_teacher, name='delete'),           # Delete
+    path('create/', CreateTeacherView.as_view(), name='create'),                   # Create
+    path('update/<int:pk>', UpdateTeacherView.as_view(), name='update'),           # Update
+    path('delete/<int:pk>', DeleteTeacherView.as_view(), name='delete'),           # Delete
 ]

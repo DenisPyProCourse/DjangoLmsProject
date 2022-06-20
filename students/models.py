@@ -1,16 +1,15 @@
-import datetime
+# import datetime
 import random
 
-from dateutil.relativedelta import relativedelta
+# from dateutil.relativedelta import relativedelta
 
 from django.db import models
 
-from faker import Faker
+# from faker import Faker
 
 # from .validators import AdultValidator
 from core.models import PersonModel
 from groups.models import Group
-
 
 
 class Student(PersonModel):
@@ -27,7 +26,7 @@ class Student(PersonModel):
 
     def save(self, *args, **kwargs):
         # self.age = relativedelta(datetime.date.today(), self.birthday).years
-        #self.phone_number = phone_number_norm(self.phone_number)
+        # self.phone_number = phone_number_norm(self.phone_number)
         super().save(*args, **kwargs)
 
     @classmethod

@@ -56,16 +56,20 @@
 
       </ul>
 
-        {% if students_filter %}
+        {% url 'students:list' as my_view %}
+        {% if request.path == my_view %}
             {% include 'students/search.html' %}
         {% endif %}
-        {% if teachers_filter %}
+        {% url 'teachers:list' as my_view %}
+        {% if request.path == my_view %}
             {% include 'teachers/search.html' %}
         {% endif %}
-        {% if groups_filter %}
+        {% url 'groups:list' as my_view %}
+        {% if request.path == my_view %}
             {% include 'groups/search.html' %}
         {% endif %}
-        {% if courses_filter %}
+        {% url 'courses:list' as my_view %}
+        {% if request.path == my_view %}
             {% include 'courses/search.html' %}
         {% endif %}
 

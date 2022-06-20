@@ -1,13 +1,14 @@
 import datetime
 
 from dateutil.relativedelta import relativedelta
+
 from django.core.validators import MinLengthValidator
 from django.db import models    # noqa
 
 # Create your models here.
 from faker import Faker
 
-from .validators import adult_validator, phone_number_validator, phone_number_norm
+from .validators import adult_validator
 
 
 class PersonModel(models.Model):
@@ -31,8 +32,11 @@ class PersonModel(models.Model):
         validators=[adult_validator]
         # validators=[AdultValidator(20)]
     )
-    phone_number = models.CharField(max_length=25, null=True, validators=[phone_number_validator,
-                                                                            phone_number_norm])
+    phone_number = models.CharField(
+        max_length=25,
+        null=True,
+        # validators=[phone_number_validator, phone_number_norm]
+    )
 
     def get_age(self):
         return relativedelta(datetime.date.today(), self.birthday).years
@@ -53,6 +57,7 @@ class PersonModel(models.Model):
     def generate(cls, cnt):
         for i in range(cnt):
             cls._generate()
+
 
 class GroupModel(models.Model):
     class Meta:

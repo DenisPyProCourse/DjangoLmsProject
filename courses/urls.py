@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import create_course
-from .views import delete_course
-from .views import get_course
-from .views import update_course
+from .views import CreateCourseView
+from .views import DeleteCourseView
+from .views import ListCoursesView
+from .views import UpdateCourseView
 
 
 # CRUD - Create, Read, Update, Delete
@@ -11,8 +11,8 @@ from .views import update_course
 app_name = 'courses'
 
 urlpatterns = [
-    path('', get_course, name='list'),  # Read
-    path('create/', create_course, name='create'),            # Create
-    path('update/<int:pk>', update_course, name='update'),           # Update
-    path('delete/<int:pk>', delete_course, name='delete'),           # Delete
+    path('', ListCoursesView.as_view(), name='list'),                             # Read
+    path('create/', CreateCourseView.as_view(), name='create'),                   # Create
+    path('update/<int:pk>', UpdateCourseView.as_view(), name='update'),           # Update
+    path('delete/<int:pk>', DeleteCourseView.as_view(), name='delete'),           # Delete
 ]

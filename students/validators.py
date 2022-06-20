@@ -11,7 +11,6 @@
 #     if age < ADULT_AGE_LIMIT:
 #         raise ValidationError('Age should be greater than 18 y.o.')
 #
-#
 # def phone_number_norm(phone_number):
 #     for i in phone_number:
 #         if not i.isdigit():

@@ -25,8 +25,8 @@
 {% block content %}
 
     <br>
-    {% with list_object=students_filter.qs on_group=True%}
-    {% include 'includes/students_list_table.html' %}
+    {% with list_object=object_list.qs on_group=True %}
+        {% include 'includes/students_list_table.html' %}
     {% endwith %}
 {#      <table class="table table-striped">#}
 {#    <thead>#}

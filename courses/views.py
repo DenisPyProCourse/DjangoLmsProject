@@ -1,59 +1,59 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.urls import reverse
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+from groups.models import Group
 
 from .forms import CourseCreateForm, CourseFilterForm, CourseUpdateForm
+
 from .models import Course
 
 
-def get_course(request):
+class ListCoursesView(ListView):
+    model = Course
+    template_name = 'courses/list.html'
 
-    gr = Course.objects.all()
-    courses_filter = CourseFilterForm(data=request.GET, queryset=gr)
+    def get_queryset(self):
+        courses_filter = CourseFilterForm(
+            data=self.request.GET,
+            queryset=self.model.objects.all()
+        )
 
-    return render(
-        request,
-        'courses/list.html',
-        {'courses_filter': courses_filter}
-    )
-
-
-def create_course(request):
-    if request.method == 'GET':
-        form = CourseCreateForm()
-    else:
-        form = CourseCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-            return HttpResponseRedirect(reverse('courses:list'))
-
-    return render(
-        request=request,
-        template_name='courses/create.html',
-        context={'form': form}
-    )
+        return courses_filter
 
 
-def update_course(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    if request.method == 'GET':
-        form = CourseUpdateForm(instance=course)
-    else:
-        form = CourseUpdateForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
+class CreateCourseView(CreateView):
+    model = Course
+    form_class = CourseCreateForm
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/create.html'
 
-            return HttpResponseRedirect(reverse('courses:list'))
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        try:
+            form.instance.group = Group.objects.get(pk=form.cleaned_data['create_group'])
+            form.instance.save()
+        except ValueError:
+            pass
 
-    return render(request, 'courses/update.html', {'form': form, 'course': course})
+        return response
 
 
-def delete_course(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    if request.method == 'POST':
-        course.delete()
-        return HttpResponseRedirect(reverse('courses:list'))
+class UpdateCourseView(UpdateView):
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/update.html'
+    form_class = CourseUpdateForm
 
-    return render(request, 'courses/delete.html', {'course': course})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['teachers'] = self.get_object().teachers.prefetch_related('courses')
+        # context['groups'] = self.get_object().groups.pregetch_related('course_of_group')
+        # context['groups'] = self.object.group
+        return context
+
+
+class DeleteCourseView(DeleteView):
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/delete.html'
