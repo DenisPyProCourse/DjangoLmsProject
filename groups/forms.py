@@ -53,7 +53,7 @@ class GroupUpdateForm(GroupBaseForm):
         self.fields['headteacher_field'] = forms.ChoiceField(
             choices=[teacher for teacher in lst],
             label='Amend headteacher',
-            required=False,
+            required=False
         )
 
     class Meta(GroupBaseForm.Meta):

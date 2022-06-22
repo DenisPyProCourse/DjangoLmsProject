@@ -47,8 +47,10 @@
             <th>Start date</th>
             <th>End date</th>
             <th>Group</th>
+            {% if user.is_authenticated %}
             <th style="width: 5%"><i class="bi bi-pencil"></i></th>
             <th style="width: 5%"><i class="bi bi-trash3"></i></th>
+            {% endif %}
         </tr>
     </thead>
     {% for course in object_list.qs %}
@@ -60,8 +62,10 @@
             <td>{{ course.start_date }}</td>
             <td>{% if course.end_date %}{{ course.end_date }}{% endif %}</td>
             <td>{{ course.group }}</td>
+            {% if user.is_authenticated %}
             <td><a class="btn btn-outline-primary" href="{% url 'courses:update' course.pk %}">Edit</a></td>
             <td><a class="btn btn-outline-primary" href="{% url 'courses:delete' course.pk %}">Delete</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
           </table>

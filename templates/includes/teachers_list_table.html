@@ -6,11 +6,17 @@
             <th style="width: 15%">Last name</th>
 {#            <th style="width: 7%">Age</th>#}
             <th style="width: 15%">Birthday</th>
+            {% if user.is_authenticated %}
             <th><i class="bi bi-telephone-fill"></i></th>
+            {% else %}
+            <th style="width: 15%"><i class="bi bi-telephone-fill"></i></th>
+            {% endif %}
 {#            {% if on_group %}<th style="width: 10%">Course</th>{% endif %}#}
             <th style="width: 13%">Group leader</th>
+            {% if user.is_authenticated %}
             <th style="width: 5%"><i class="bi bi-pencil-fill"></i></th>
            <th style="width: 5%"><i class="bi bi-trash3-fill"></i></th>
+            {% endif %}
         </tr>
     </thead>
     {% for teacher in list_object %}
@@ -25,8 +31,10 @@
 {#                <td>{% if teacher.courses.group_name %}{{ teacher.courses.group_name }}{% endif %}</td>#}
 {#            {% endif %}#}
             <td>{% if teacher.headteacher_group %} {{teacher.headteacher_group}}{% endif %}</td>
+            {% if user.is_authenticated %}
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
             <td><a class="btn btn-outline-primary" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
           </table>

@@ -1,6 +1,7 @@
 # from django.http import HttpResponseRedirect
 # from django.shortcuts import get_object_or_404
 # from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 
 # from webargs.djangoparser import use_args
@@ -61,7 +62,7 @@ class ListStudentView(ListView):
 #         context={'form': form}
 #     )
 
-class CreateStudentView(CreateView):
+class CreateStudentView(LoginRequiredMixin, CreateView):
     model = Student
     form_class = StudentCreateForm
     success_url = reverse_lazy('students:list')
@@ -89,7 +90,7 @@ class CreateStudentView(CreateView):
 #     template_name = 'students/update.html'
 #     form_class = StudentCreateForm
 
-class UpdateStudentView(UpdateView):
+class UpdateStudentView(LoginRequiredMixin, UpdateView):
     model = Student
     success_url = reverse_lazy('students:list')
     template_name = 'students/update.html'
@@ -104,7 +105,7 @@ class UpdateStudentView(UpdateView):
 #     return render(request, 'students/delete.html', {'student': student})
 
 
-class DeleteStudentView(DeleteView):
+class DeleteStudentView(LoginRequiredMixin, DeleteView):
     model = Student
     success_url = reverse_lazy('students:list')
     template_name = 'students/delete.html'

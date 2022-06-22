@@ -3,6 +3,7 @@
 # from django.shortcuts import render
 # from django.core.exceptions import ValidationError
 # from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView, ListView, CreateView, DeleteView
 
@@ -58,7 +59,7 @@ class ListGroupView(ListView):
 #     )
 
 
-class CreateGroupView(CreateView):
+class CreateGroupView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = GroupCreateForm
     success_url = reverse_lazy('groups:list')
@@ -95,7 +96,7 @@ class CreateGroupView(CreateView):
 #         }
 #     )
 
-class UpdateGroupView(UpdateView):
+class UpdateGroupView(LoginRequiredMixin, UpdateView):
     model = Group
     success_url = reverse_lazy('groups:list')
     template_name = 'groups/update.html'
@@ -145,7 +146,7 @@ class UpdateGroupView(UpdateView):
 #
 #     return render(request, 'groups/delete.html', {'group': group})
 
-class DeleteGroupView(DeleteView):
+class DeleteGroupView(LoginRequiredMixin, DeleteView):
     model = Group
     success_url = reverse_lazy('groups:list')
     template_name = 'groups/delete.html'

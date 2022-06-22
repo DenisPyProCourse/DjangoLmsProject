@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 
 from django.urls import reverse_lazy
@@ -24,6 +26,7 @@ class ListTeacherView(ListView):
         return teachers_filter
 
 
+@login_required
 @use_kwargs(
     {
         'cnt': Int(required=False, missing=10),
@@ -37,21 +40,21 @@ def generate_teachers(request, cnt):
     return HttpResponse(html)
 
 
-class CreateTeacherView(CreateView):
+class CreateTeacherView(LoginRequiredMixin, CreateView):
     model = Teacher
     form_class = TeacherCreateForm
     success_url = reverse_lazy('teachers:list')
     template_name = 'teachers/create.html'
 
 
-class UpdateTeacherView(UpdateView):
+class UpdateTeacherView(LoginRequiredMixin, UpdateView):
     model = Teacher
     success_url = reverse_lazy('teachers:list')
     template_name = 'teachers/update.html'
     form_class = TeacherCreateForm
 
 
-class DeleteTeacherView(DeleteView):
+class DeleteTeacherView(LoginRequiredMixin, DeleteView):
     model = Teacher
     success_url = reverse_lazy('teachers:list')
     template_name = 'teachers/delete.html'
