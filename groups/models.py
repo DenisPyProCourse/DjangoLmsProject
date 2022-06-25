@@ -19,7 +19,8 @@ class Group(GroupModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='headteacher_group'
+        related_name='headteacher_group',
+        # verbose_name='Headteacher of group: '
     )
 
     class Meta:
