@@ -6,14 +6,35 @@ from courses.models import Course
 
 class TeachersInlineTable(admin.TabularInline):
     model = Course.teachers.through
-    model.readonly_fields = 'teachers'
     extra = 0
+    can_delete = False
+
+    fields = [
+        'first_name',
+        'last_name',
+        'salary',
+    ]
+
+    readonly_fields = fields
+
 
     # def has_add_permission(self, request, obj):
     #     return False
     #
     # def has_delete_permission(self, request, obj=None):
     #     return False
+    def first_name(self, obj):
+
+        return obj.teacher.first_name
+
+    def last_name(self, obj):
+
+        return obj.teacher.last_name
+
+    def salary(self, obj):
+
+        return obj.teacher.salary
+
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = [

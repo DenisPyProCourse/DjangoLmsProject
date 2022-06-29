@@ -16,9 +16,9 @@
         </tr>
     </thead>
 {#    {% for group in groups_filter.qs %}#}
-      {% for group in object_list.qs %}
+      {% for group in object_list %}
             <tr>
-            <td>{{ forloop.counter }}</td>
+             <td>{{ forloop.counter0|add:page_obj.start_index}}</td>
             <td>{{ group.group_name }}</td>
 {#            <td>{{ group.students_number }}</td>#}
             <td>{{ group.headman.first_name }} {{ group.headman.last_name }}</td>

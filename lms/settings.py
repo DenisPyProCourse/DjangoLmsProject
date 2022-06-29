@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_filters',
     'debug_toolbar',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
+    'ckeditor',
     'groups.apps.GroupsConfig',
     'teachers.apps.TeachersConfig',
     'students.apps.StudentsConfig',
@@ -63,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'core.middlewares.CalculateRequestTimeMiddleware',
 ]
 
@@ -79,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.params',
             ],
         },
     },
@@ -139,9 +144,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
+
+STATIC_ROOT = BASE_DIR / 'static'
+
 
 USE_L10N = False
 DATE_FORMAT = 'd-m-Y'
@@ -159,3 +167,9 @@ if DEBUG:
     SHELL_PLUS_PRINT_SQL = True
 
 EMAIL_PORT = 1044
+
+SITE_ID = 1
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'

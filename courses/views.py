@@ -12,14 +12,30 @@ from .models import Course
 class ListCoursesView(ListView):
     model = Course
     template_name = 'courses/list.html'
+    paginate_by = 5
 
-    def get_queryset(self):
-        courses_filter = CourseFilterForm(
+    def get_filter(self):
+        return CourseFilterForm(
             data=self.request.GET,
             queryset=self.model.objects.all()
         )
 
-        return courses_filter
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.get_filter().form
+
+        return context
+
+    # def get_queryset(self):
+    #     courses_filter = CourseFilterForm(
+    #         data=self.request.GET,
+    #         queryset=self.model.objects.all()
+    #     )
+    #
+    #     return courses_filter
 
 
 class CreateCourseView(LoginRequiredMixin, CreateView):

@@ -16,14 +16,30 @@ from .utils import gen2html
 class ListTeacherView(ListView):
     model = Teacher
     template_name = 'teachers/list.html'
+    paginate_by = 15
 
-    def get_queryset(self):
-        teachers_filter = TeacherFilterForm(
+    def get_filter(self):
+        return TeacherFilterForm(
             data=self.request.GET,
             queryset=self.model.objects.all().select_related('headteacher_group')
         )
 
-        return teachers_filter
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.get_filter().form
+
+        return context
+
+    # def get_queryset(self):
+    #     teachers_filter = TeacherFilterForm(
+    #         data=self.request.GET,
+    #         queryset=self.model.objects.all().select_related('headteacher_group')
+    #     )
+    #
+    #     return teachers_filter
 
 
 @login_required

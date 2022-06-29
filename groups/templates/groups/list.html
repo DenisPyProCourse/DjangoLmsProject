@@ -38,7 +38,7 @@
 {#    </form>#}
     <br>
 
-    {% with list_object=object_list.qs on_group=True%}
+    {% with list_object=object_list on_group=True%}
         {% include 'includes/groups_list_table.html' %}
     {% endwith %}
 

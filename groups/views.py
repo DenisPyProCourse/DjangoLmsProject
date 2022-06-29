@@ -17,6 +17,7 @@ from .forms import GroupCreateForm, GroupFilterForm, GroupUpdateForm
 from .models import Group
 
 
+
 # def get_group(request):
 #
 #     gr = Group.objects.all()
@@ -30,17 +31,36 @@ from .models import Group
 #     # html = qs2html(gr)
 #     # return HttpResponse(html)
 
+
 class ListGroupView(ListView):
     model = Group
     template_name = 'groups/list.html'
+    paginate_by = 5
 
-    def get_queryset(self):
-        groups_filter = GroupFilterForm(
+    def get_filter(self):
+
+        return GroupFilterForm(
             data=self.request.GET,
             queryset=self.model.objects.all()
         )
 
-        return groups_filter
+    def get_queryset(self):
+
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.get_filter().form
+
+        return context
+
+    # def get_queryset(self):
+    #     groups_filter = GroupFilterForm(
+    #         data=self.request.GET,
+    #         queryset=self.model.objects.all()
+    #     )
+    #
+    #     return groups_filter
 
 # def create_group(request):
 #     if request.method == 'GET':

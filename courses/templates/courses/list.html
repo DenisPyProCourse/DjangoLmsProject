@@ -53,9 +53,9 @@
             {% endif %}
         </tr>
     </thead>
-    {% for course in object_list.qs %}
+    {% for course in object_list %}
             <tr>
-            <td>{{ forloop.counter }}</td>
+            <td>{{ forloop.counter0|add:page_obj.start_index}}</td>
             <td>{{ course.group_name }}</td>
 {#            <td>{{ group.students_number }}</td>#}
 {#            <td>{{ course.group.group_name }}</td>#}
