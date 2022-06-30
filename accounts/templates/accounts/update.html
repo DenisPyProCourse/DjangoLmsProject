@@ -5,10 +5,13 @@
 {% block title %}Edit profile{% endblock %}
 
 {% block content %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mx-auto" style="width: 300px;">
         <div>
+            <div class="col-md-4">
+              <img src="{{ user.profile.avatar.url }}" class="rounded-circle p-3" width="200" height="200" alt="avatar">
+            </div>
             <div class="p-3 m-3">
                 <h2 class="account-heading">{{ user.username }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>

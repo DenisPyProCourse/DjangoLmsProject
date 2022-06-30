@@ -58,7 +58,7 @@ class AccountUpdateView(LoginRequiredMixin, ProcessFormView):
         user = self.request.user
         profile = user.profile
         user_form = UserUpdateForm(instance=user, data=request.POST)
-        profile_form = ProfileUpdateForm(instance=profile, data=request.POST)
+        profile_form = ProfileUpdateForm(instance=profile, data=request.POST, files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
